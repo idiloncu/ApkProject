@@ -11,30 +11,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:onClick="backButtonClicked"
         android:text="BACK"
         app:layout_constraintEnd_toStartOf="@+id/nextButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/image" />
 
     <Button
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:onClick="nextButtonClicked"
         android:text="NEXT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/image" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/image"
         android:layout_width="215dp"
         android:layout_height="186dp"
         android:layout_marginStart="98dp"
         android:layout_marginTop="106dp"
         android:layout_marginEnd="98dp"
+        android:onClick="imageClicked"
         android:src="@drawable/test1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

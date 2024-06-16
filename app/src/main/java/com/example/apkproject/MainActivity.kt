@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
             })
 
-
             mqtt.setCallback(object : MqttCallback {
                 override fun connectionLost(cause: Throwable?) {
                     println("Connection lost")
