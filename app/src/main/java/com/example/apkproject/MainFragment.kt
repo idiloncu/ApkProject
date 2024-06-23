@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import org.eclipse.paho.client.mqttv3.MqttCallback
 
 class MainFragment : Fragment() {
+
     private lateinit var binding: FragmentMainBinding
     private val imagesId= arrayListOf(
         R.drawable.test1,
@@ -27,53 +28,57 @@ class MainFragment : Fragment() {
     )
     var currentIndex = 0
 
+    /*
+       ovride fun onCreate(savedInstanceState: Bundle?) {
+           super.onCreate(savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+       }
+
+       override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+           binding.backButton.setOnClickListener{
+             showPreviousImage()
+
+           }
+           binding.nextButton.setOnClickListener{
+               showNextImage()
+           }
+           loadCurrentImage()
+           createMqttClient()
+           return inflater.inflate(R.layout.fragment_main, container, false)
+       }
+
+       private fun createMqttClient() {
+
+       }
+
+       private fun showNextImage() {
+           if (currentIndex<imagesId.size){
+               currentIndex++
+               loadCurrentImage()
+           }
+       }
+
+       private fun showPreviousImage() {
+
+           if (currentIndex>0){
+               currentIndex--
+               loadCurrentImage()
+           }
+       }
+
+       private fun loadCurrentImage() {
+           binding.image.setImageResource(imagesId[currentIndex])
+       }
+
+
 
 
     }
+       */
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding.backButton.setOnClickListener{
-          showPreviousImage()
-
-        }
-        binding.nextButton.setOnClickListener{
-            showNextImage()
-        }
-        loadCurrentImage()
-        createMqttClient()
-        return inflater.inflate(R.layout.fragment_main, container, false)
-    }
-
-    private fun createMqttClient() {
-
-    }
-
-    private fun showNextImage() {
-        if (currentIndex<imagesId.size){
-            currentIndex++
-            loadCurrentImage()
-        }
-    }
-
-    private fun showPreviousImage() {
-
-        if (currentIndex>0){
-            currentIndex--
-            loadCurrentImage()
-        }
-    }
-
-    private fun loadCurrentImage() {
-        binding.image.setImageResource(imagesId[currentIndex])
-    }
 
 
 }
-
-
-
-
