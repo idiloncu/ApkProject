@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         loadCurrentImage()
         createMqttClient()
 
+        val clientId= MqttClient.generateClientId()
+        mqttClient = MqttAndroidClient(applicationContext,"@string/server_URI",clientId)
+
+
 
 
         lifecycleScope.launch {
