@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val mqtt = MqttAndroidClient(
-                this@MainActivity, "tcp://deneme-234@broker.mqtt.cool:1883", UUID.randomUUID().toString()
+                this@MainActivity, "@string/server_URI", UUID.randomUUID().toString()
             )
 
             mqtt.connect(MqttConnectOptions(),null,object:IMqttActionListener{
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     mqtt.subscribe("testtest", 1)
 
                     val clientId = MqttClient.generateClientId()
-                    mqttClient = MqttAndroidClient(applicationContext,"tcp://deneme-234@broker.mqtt.cool:1883",clientId)
+                    mqttClient = MqttAndroidClient(applicationContext,"string/server_URI",clientId)
 
                 }
 
@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
                     val msg = message?.payload?.toString(Charsets.UTF_8)
                    runOnUiThread{
                         when(msg){
-                            "next" -> showNextImage()
-                            "back" -> showPreviousImage()
+                            "@string/next" -> showNextImage()
+                            "@string/back" -> showPreviousImage()
                             }
                         }
                     }
