@@ -10,17 +10,13 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
     private var client: MqttClient? = null
     fun connect(brokerUrl: String?, clientId: String?) {
         try {
-            // Set up the persistence layer
             val persistence = MemoryPersistence()
 
-            // Initialize the MQTT client
             client = MqttClient(brokerUrl, clientId, persistence)
 
-            // Set up the connection options
             val connectOptions = MqttConnectOptions()
             connectOptions.isCleanSession = true
 
-            // Connect to the broker
             client!!.connect(connectOptions)
         } catch (e: MqttException) {
             e.printStackTrace()

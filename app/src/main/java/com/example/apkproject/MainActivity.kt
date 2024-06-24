@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.apkproject.databinding.ActivityMainBinding
+import com.example.apkproject.model.SERVER_URI
 import info.mqtt.android.service.MqttAndroidClient
 import kotlinx.coroutines.launch
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
@@ -16,7 +17,6 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.util.UUID
-import javax.security.auth.callback.Callback
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

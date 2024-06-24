@@ -1,20 +1,8 @@
-package com.example.apkproject
+package com.example.apkproject.view
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.lifecycle.lifecycleScope
-import com.example.apkproject.R.drawable.test1
-import com.example.apkproject.R.drawable.test3
-import com.example.apkproject.R.drawable.test4
-import com.example.apkproject.R.drawable.test5
-import com.example.apkproject.R.drawable.test6
+import com.example.apkproject.R
 import com.example.apkproject.databinding.FragmentMainBinding
-import kotlinx.coroutines.launch
-import org.eclipse.paho.client.mqttv3.MqttCallback
 
 class MainFragment : Fragment() {
 

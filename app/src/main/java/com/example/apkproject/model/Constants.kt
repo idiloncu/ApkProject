@@ -1,4 +1,4 @@
-package com.example.apkproject
+package com.example.apkproject.model
 
 
 
