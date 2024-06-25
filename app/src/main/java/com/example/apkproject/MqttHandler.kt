@@ -5,15 +5,14 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
+import org.json.JSONStringer
 
  class MqttHandler {
     private var client: MqttClient? = null
     fun connect(brokerUrl: String?, clientId: String?) {
         try {
             val persistence = MemoryPersistence()
-
             client = MqttClient(brokerUrl, clientId, persistence)
-
             val connectOptions = MqttConnectOptions()
             connectOptions.isCleanSession = true
 
@@ -47,4 +46,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
             e.printStackTrace()
         }
     }
+      fun serialize(message: MqttMessage){
+
+      }
 }

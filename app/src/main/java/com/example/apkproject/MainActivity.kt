@@ -2,10 +2,13 @@ package com.example.apkproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.apkproject.databinding.ActivityMainBinding
-import com.example.apkproject.model.SERVER_URI
+import com.example.apkproject.model.constant.BACK
+import com.example.apkproject.model.constant.NEXT
+import com.example.apkproject.model.constant.SERVER_URI
 import info.mqtt.android.service.MqttAndroidClient
 import kotlinx.coroutines.launch
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
@@ -20,7 +23,7 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mqttClient: MqttAndroidClient
+    private lateinit var mqtt: MqttAndroidClient
     var currentIndex = 0
     private lateinit var mqttHandler: MqttHandler
     private val clientId = MqttClient.generateClientId()
@@ -53,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         createMqttClient()
 
         val clientId= MqttClient.generateClientId()
-         mqttClient = MqttAndroidClient(applicationContext,"@string/server_URI",clientId)
+       //  mqttClient = MqttAndroidClient(applicationContext, SERVER_URI,clientId)
 
         lifecycleScope.launch {
-            val mqtt = MqttAndroidClient(
+             mqtt = MqttAndroidClient(
                 this@MainActivity, SERVER_URI, UUID.randomUUID().toString()
             )
 
@@ -66,8 +69,7 @@ class MainActivity : AppCompatActivity() {
                     mqtt.subscribe("testtest", 1)
 
                     val clientId = MqttClient.generateClientId()
-                    mqttClient =
-                        MqttAndroidClient(applicationContext, SERVER_URI, clientId)
+                   // mqttClient = MqttAndroidClient(applicationContext, SERVER_URI, clientId)
 
                 }
 
@@ -86,36 +88,21 @@ class MainActivity : AppCompatActivity() {
                 override fun messageArrived(topic: String?, message: MqttMessage?) {
                     println("$topic: ${message?.payload?.toString(Charsets.UTF_8)}")
                     val msg = message?.payload?.toString(Charsets.UTF_8)
-                    runOnUiThread {
+                    Log.d("asdf", msg.toString())
                         when (msg) {
-                            "@string/next" -> showNextImage()
-                            "@string/back" -> showPreviousImage()
+                            "Next" -> showNextImage()
+                            "Back" -> showPreviousImage()
+                            else->showNextImage()
                         }
-                    }
+
                 }
 
                 override fun deliveryComplete(token: IMqttDeliveryToken?) {
 
                 }
             })
-            val options = MqttConnectOptions().apply {
-                isAutomaticReconnect = true
-                isCleanSession = true
-            }
-            try {
-                mqttClient.connect(options, null, object : IMqttActionListener {
-                    override fun onSuccess(asyncActionToken: IMqttToken?) {
-                        mqttClient.subscribe("testtest", 0)
-                    }
 
-                    override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                        exception?.printStackTrace()
-                    }
 
-                })
-            } catch (e: MqttException) {
-                e.printStackTrace()
-            }
         }
     }
 
@@ -139,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNextImage() {
+        Log.d("asdf", "showNextImage: ")
         if (currentIndex < imagesId.size) {
             currentIndex++
             loadCurrentImage()
