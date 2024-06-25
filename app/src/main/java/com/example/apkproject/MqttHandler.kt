@@ -1,14 +1,15 @@
 package com.example.apkproject
 
+import com.google.gson.Gson
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
-import org.json.JSONStringer
 
- class MqttHandler {
+class MqttHandler {
     private var client: MqttClient? = null
+    val gson = Gson()
     fun connect(brokerUrl: String?, clientId: String?) {
         try {
             val persistence = MemoryPersistence()
@@ -46,7 +47,10 @@ import org.json.JSONStringer
             e.printStackTrace()
         }
     }
-      fun serialize(message: MqttMessage){
 
-      }
+    fun serialize(message: MqttMessage) {
+        val json = "{message}"
+
+
+    }
 }

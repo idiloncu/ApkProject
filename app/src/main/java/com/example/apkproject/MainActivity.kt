@@ -1,14 +1,14 @@
 package com.example.apkproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.apkproject.Message.MessageDataClass
 import com.example.apkproject.databinding.ActivityMainBinding
-import com.example.apkproject.model.constant.BACK
-import com.example.apkproject.model.constant.NEXT
 import com.example.apkproject.model.constant.SERVER_URI
+import com.google.gson.Gson
 import info.mqtt.android.service.MqttAndroidClient
 import kotlinx.coroutines.launch
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
@@ -17,7 +17,6 @@ import org.eclipse.paho.client.mqttv3.IMqttToken
 import org.eclipse.paho.client.mqttv3.MqttCallback
 import org.eclipse.paho.client.mqttv3.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions
-import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import java.util.UUID
 
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     var currentIndex = 0
     private lateinit var mqttHandler: MqttHandler
     private val clientId = MqttClient.generateClientId()
-
 
     private val imagesId = arrayListOf(
         R.drawable.test1,
@@ -55,11 +53,11 @@ class MainActivity : AppCompatActivity() {
         loadCurrentImage()
         createMqttClient()
 
-        val clientId= MqttClient.generateClientId()
-       //  mqttClient = MqttAndroidClient(applicationContext, SERVER_URI,clientId)
+        val clientId = MqttClient.generateClientId()
+        //  mqttClient = MqttAndroidClient(applicationContext, SERVER_URI,clientId)
 
         lifecycleScope.launch {
-             mqtt = MqttAndroidClient(
+            mqtt = MqttAndroidClient(
                 this@MainActivity, SERVER_URI, UUID.randomUUID().toString()
             )
 
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     mqtt.subscribe("testtest", 1)
 
                     val clientId = MqttClient.generateClientId()
-                   // mqttClient = MqttAndroidClient(applicationContext, SERVER_URI, clientId)
+                    // mqttClient = MqttAndroidClient(applicationContext, SERVER_URI, clientId)
 
                 }
 
@@ -84,16 +82,18 @@ class MainActivity : AppCompatActivity() {
                 override fun connectionLost(cause: Throwable?) {
                     println("Connection lost")
                 }
-
                 override fun messageArrived(topic: String?, message: MqttMessage?) {
                     println("$topic: ${message?.payload?.toString(Charsets.UTF_8)}")
                     val msg = message?.payload?.toString(Charsets.UTF_8)
                     Log.d("asdf", msg.toString())
-                        when (msg) {
-                            "Next" -> showNextImage()
-                            "Back" -> showPreviousImage()
-                            else->showNextImage()
+                    val parsedMessage = Gson().fromJson(msg, MessageDataClass::class.java)
+                    when (parsedMessage.msg) {
+                        "Next" -> showNextImage()
+                        "Back" -> showPreviousImage()
+                        else -> {
+                            Toast.makeText(this@MainActivity, parsedMessage.msg, Toast.LENGTH_SHORT).show()
                         }
+                    }
 
                 }
 
@@ -106,22 +106,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun createMqttClient() {
 
     }
 
-    protected override fun onDestroy(){
+    protected override fun onDestroy() {
         mqttHandler.disconnect()
         super.onDestroy()
 
     }
-    
+
     private fun publishMessage(topic: String?, message: MqttMessage?) {
-        Toast.makeText(this,"Publishing message" + message,Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Publishing message" + message, Toast.LENGTH_LONG).show()
         mqttHandler.publish(topic, message.toString())
     }
-    private fun subscribe(topic: String?){
-        Toast.makeText(this,"Subscribing to topic",Toast.LENGTH_LONG).show()
+
+    private fun subscribe(topic: String?) {
+        Toast.makeText(this, "Subscribing to topic", Toast.LENGTH_LONG).show()
         mqttHandler.subscribe(topic)
     }
 
