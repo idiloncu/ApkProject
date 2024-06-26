@@ -1,4 +1,4 @@
-package com.example.apkproject.Message
+package com.example.apkproject.dataclass
 
 
 data class MessageDataClass(var msg: String)
